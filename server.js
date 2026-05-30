@@ -44,6 +44,14 @@ app.use("/api/route", routeRoutes);
 app.use("/api/alerts", alertRoutes);
 app.use("/api/location", locationRoutes);
 
+// Fallback Route Aliases (Handles missing /api prefix in live environments)
+app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
+app.use("/predict", predictionRoutes);
+app.use("/route", routeRoutes);
+app.use("/alerts", alertRoutes);
+app.use("/location", locationRoutes);
+
 const fs = require("fs");
 
 if (process.env.NODE_ENV === "production") {
