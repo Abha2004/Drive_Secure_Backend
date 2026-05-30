@@ -28,7 +28,7 @@ initSocket(server);
 // Middleware - CORS and Body Parser
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: allowedOrigins.length > 0 ? allowedOrigins : "*",
   })
 );
 app.use(express.json());

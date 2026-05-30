@@ -8,7 +8,7 @@ const allowedOrigins = (process.env.FRONTEND_ORIGIN || "")
 const initSocket = (server) => {
     const io = socketIo(server, {
         cors: {
-            origin: allowedOrigins,
+            origin: allowedOrigins.length > 0 ? allowedOrigins : "*",
             methods: ["GET", "POST"]
         }
     });
