@@ -44,12 +44,18 @@ app.use("/api/route", routeRoutes);
 app.use("/api/alerts", alertRoutes);
 app.use("/api/location", locationRoutes);
 
+const fs = require("fs");
+
 if (process.env.NODE_ENV === "production") {
   const clientBuildPath = path.join(__dirname, "..", "frontend", "dist");
-  app.use(express.static(clientBuildPath));
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(clientBuildPath, "index.html"));
-  });
+  if (fs.existsSync(clientBuildPath)) {
+    app.use(express.static(clientBuildPath));
+    app.get(/.*/, (req, res) => {
+      res.sendFile(path.join(clientBuildPath, "index.html"));
+    });
+  } else {
+    console.log("Production environment detected, but frontend build directory not found. Serving as standalone API.");
+  }
 }
 
 app.get("/", (req,res) =>{
