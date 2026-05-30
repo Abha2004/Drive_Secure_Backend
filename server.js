@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config(); // Reloaded for IPv4 ML API fix
 const express = require("express");
 const cors = require("cors");
 const http = require("http");
@@ -25,7 +25,7 @@ const allowedOrigins = (process.env.FRONTEND_ORIGIN || "")
 // Initialize Socket.io
 initSocket(server);
 
-// Middleware
+// Middleware - CORS and Body Parser
 app.use(
   cors({
     origin: allowedOrigins,
