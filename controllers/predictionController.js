@@ -44,3 +44,19 @@ exports.getHistory = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.deleteHistory = async (req, res) => {
+    try {
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+        const prediction = await Prediction.findOneAndDelete({ _id: req.params.id, user: req.user.id });
+        if (!prediction) {
+            return res.status(404).json({ message: 'Prediction not found or unauthorized' });
+        }
+        res.json({ message: 'Prediction deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting prediction history:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
